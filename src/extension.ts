@@ -1,10 +1,36 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import fs from 'fs'
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+
+	var path = ""
+
+	
+
+	if(vscode.workspace.workspaceFolders !== undefined)
+	{
+		path = vscode.workspace.workspaceFolders[0].uri.path + "/.vscode/statusbar-buttons.json"
+		console.log(path)
+
+		path = path.substring(1, path.length)
+		console.log(path)
+		var daraArray = JSON.parse(fs.readFileSync(path, 'utf-8'))
+		console.log(daraArray.buttons.length)
+		console.log(daraArray.buttons[0].text)
+	}
+
+	else
+	{
+		vscode.window.showErrorMessage('There isn\'t any Workspaces!');
+	}
+
+
+
+
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
@@ -25,8 +51,12 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('Bay World from VSCode Statusbar Buttons!');
 	});
 
+	let refresh = vscode.commands.registerCommand('statusbar-buttons.refresh', () => {
+		vscode.window.showInformationMessage('Refresh Statusbar Buttons!');
+	});
 
-	let statusBarItem = vscode.window.createStatusBarItem("testButton", vscode.StatusBarAlignment.Left, 1000)
+
+	let statusBarItem = vscode.window.createStatusBarItem("testButton", vscode.StatusBarAlignment.Left, 1)
 
 
 	
@@ -42,6 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposable2);
+	context.subscriptions.push(refresh);
 
 
 

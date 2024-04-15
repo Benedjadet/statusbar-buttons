@@ -22,7 +22,11 @@
 	  {
         "command": "statusbar-buttons.bayWorld2",
         "title": "Statusbar Buttons: Bay World2"
-      }
+      },
+	  {
+		"command": "statusbar-buttons.refresh",
+		"title": "Statusbar Buttons: Refresh"
+	  }
     ]
   },
   "scripts": {
